@@ -1,0 +1,2 @@
+# VegasScriptPrescribedPattern
+Vegasのスクリプト雛形
