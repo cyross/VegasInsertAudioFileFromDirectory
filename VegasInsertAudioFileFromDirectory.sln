@@ -3,7 +3,7 @@ Microsoft Visual Studio Solution File, Format Version 12.00
 # Visual Studio Version 17
 VisualStudioVersion = 17.4.33213.308
 MinimumVisualStudioVersion = 10.0.40219.1
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "VegasScriptPrescribedPattern", "VegasScriptPrescribedPattern\VegasScriptPrescribedPattern.csproj", "{57ECDD3E-FD8D-4902-9BAF-2D1761D62007}"
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "VegasInsertAudioFileFromDirectory", "VegasInsertAudioFileFromDirectory\VegasInsertAudioFileFromDirectory.csproj", "{57ECDD3E-FD8D-4902-9BAF-2D1761D62007}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
