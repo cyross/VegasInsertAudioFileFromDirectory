@@ -8,7 +8,7 @@
 // </auto-generated>
 //------------------------------------------------------------------------------
 
-namespace VegasScriptPrescribedPattern.Properties {
+namespace VegasInsertAudioFileFromDirectory.Properties {
     
     
     [global::System.Runtime.CompilerServices.CompilerGeneratedAttribute()]
@@ -44,6 +44,30 @@ namespace VegasScriptPrescribedPattern.Properties {
             }
             set {
                 this["openDirectory"] = value;
+            }
+        }
+        
+        [global::System.Configuration.UserScopedSettingAttribute()]
+        [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
+        [global::System.Configuration.DefaultSettingValueAttribute("True")]
+        public bool isRecursive {
+            get {
+                return ((bool)(this["isRecursive"]));
+            }
+            set {
+                this["isRecursive"] = value;
+            }
+        }
+        
+        [global::System.Configuration.UserScopedSettingAttribute()]
+        [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
+        [global::System.Configuration.DefaultSettingValueAttribute("False")]
+        public bool startFrom {
+            get {
+                return ((bool)(this["startFrom"]));
+            }
+            set {
+                this["startFrom"] = value;
             }
         }
     }

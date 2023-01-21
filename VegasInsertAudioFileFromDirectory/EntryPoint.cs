@@ -2,7 +2,7 @@
 using System;
 using System.Windows.Forms;
 
-namespace VegasScriptPrescribedPattern
+namespace VegasInsertAudioFileFromDirectory
 {
     public class EntryPoint
     {
@@ -10,26 +10,27 @@ namespace VegasScriptPrescribedPattern
         {
             VegasScriptSettings.Load();
             VegasHelper helper = VegasHelper.Instance(vegas);
-        }
 
-        /// <summary>
-        /// フォルダ選択ダイアログを開き、選択したフォルダの全wavファイルを新規オーディオファイルに貼り付ける
-        /// 貼り付け開始は現在のタイムルーラーの位置から。
-        /// </summary>
-        /// <param name="helper">VegasHelperオブジェクト</param>
-        private void InsertWaveFileInNewAudioTrack(VegasHelper helper)
-        {
-            FolderBrowserDialog folderBrowser = new FolderBrowserDialog();
-            folderBrowser.SelectedPath = VegasScriptSettings.OpenDirectory;
-            float interval = VegasScriptSettings.AudioInsertInterval;
-            if (folderBrowser.ShowDialog() == DialogResult.OK )
+            Setting settingDialog = new Setting();
+            settingDialog.AudioFileFolder = VegasScriptSettings.OpenDirectory;
+            settingDialog.AudioInterval = VegasScriptSettings.AudioInsertInterval;
+            settingDialog.IsRecursive = VegasScriptSettings.IsRecursive;
+            settingDialog.StartFrom = VegasScriptSettings.StartFrom;
+
+            if (settingDialog.ShowDialog() == DialogResult.OK)
             {
-                string selectedPath = folderBrowser.SelectedPath;
-                helper.InseretAudioInTrack(selectedPath, interval);
+                string selectedPath = settingDialog.AudioFileFolder;
+                float interval = settingDialog.AudioInterval;
+                bool isRecursive = settingDialog.IsRecursive;
+                bool startFrom = settingDialog.StartFrom;
+                helper.InseretAudioInTrack(selectedPath, interval, startFrom, isRecursive);
 
                 VegasScriptSettings.OpenDirectory = selectedPath;
                 VegasScriptSettings.AudioInsertInterval = interval;
+                VegasScriptSettings.IsRecursive = isRecursive;
+                VegasScriptSettings.StartFrom = startFrom;
                 VegasScriptSettings.Save();
+
             }
         }
     }

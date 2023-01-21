@@ -4,7 +4,7 @@ using System.Collections.Generic;
 using System.Runtime.InteropServices;
 using ScriptPortal.Vegas;
 
-namespace VegasScriptPrescribedPattern
+namespace VegasInsertAudioFileFromDirectory
 {
     /// <summary>
     /// Vegasオブジェクトを操作するヘルパクラス

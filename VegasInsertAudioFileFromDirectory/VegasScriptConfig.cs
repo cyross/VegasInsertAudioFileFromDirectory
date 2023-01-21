@@ -1,7 +1,7 @@
 ﻿using System;
 using System.Collections.Generic;
 
-namespace VegasScriptPrescribedPattern
+namespace VegasInsertAudioFileFromDirectory
 {
     /// <summary>
     /// VEGASのスクリプトで使われる設定を参照するためのオブジェクト
