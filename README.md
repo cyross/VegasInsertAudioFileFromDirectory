@@ -1,2 +1,3 @@
-# VegasScriptPrescribedPattern
-Vegasのスクリプト雛形
+# VegasInsertAudioFileFromDirectory
+Vegasのスクリプト
+指定のフォルダ内のオーディオファイルを一つのオーディオトラックに流し込み
