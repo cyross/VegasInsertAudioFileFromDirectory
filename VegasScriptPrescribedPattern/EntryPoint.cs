@@ -8,6 +8,7 @@ namespace VegasScriptPrescribedPattern
     {
         public void FromVegas(Vegas vegas)
         {
+            VegasScriptSettings.Load();
             VegasHelper helper = VegasHelper.Instance(vegas);
         }
 
@@ -16,14 +17,19 @@ namespace VegasScriptPrescribedPattern
         /// 貼り付け開始は現在のタイムルーラーの位置から。
         /// </summary>
         /// <param name="helper">VegasHelperオブジェクト</param>
-        /// <param name="initialFolder">参照開始するフォルダ。初期値はMyDocuments</param>
-        private void InsertWaveFileInNewAudioTrack(VegasHelper helper, Environment.SpecialFolder initialFolder = Environment.SpecialFolder.MyDocuments)
+        private void InsertWaveFileInNewAudioTrack(VegasHelper helper)
         {
             FolderBrowserDialog folderBrowser = new FolderBrowserDialog();
-            folderBrowser.RootFolder = initialFolder;
+            folderBrowser.SelectedPath = VegasScriptSettings.OpenDirectory;
+            float interval = VegasScriptSettings.AudioInsertInterval;
             if (folderBrowser.ShowDialog() == DialogResult.OK )
             {
-                helper.InseretAudioInTrack(folderBrowser.SelectedPath);
+                string selectedPath = folderBrowser.SelectedPath;
+                helper.InseretAudioInTrack(selectedPath, interval);
+
+                VegasScriptSettings.OpenDirectory = selectedPath;
+                VegasScriptSettings.AudioInsertInterval = interval;
+                VegasScriptSettings.Save();
             }
         }
     }

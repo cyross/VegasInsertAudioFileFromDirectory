@@ -1,5 +1,6 @@
 ﻿using System;
 using System.IO;
+using System.Collections.Generic;
 using System.Runtime.InteropServices;
 using ScriptPortal.Vegas;
 
@@ -25,6 +26,7 @@ namespace VegasScriptPrescribedPattern
             {
                 _instance.Vegas = vegas;
             }
+
             return _instance;
         }
 
@@ -155,30 +157,48 @@ namespace VegasScriptPrescribedPattern
         }
 
         /// <summary>
-        /// オーディオトラックを作り、指定したディレクトリ内の音楽ファイルをイベントとして挿入する
+        /// オーディオトラックを作り、指定したディレクトリ内のwavファイルをイベントとして挿入する
+        /// オーディオファイルの検知は拡張子のみで、ファイルの中身はチェックしない
+        /// 対応するファイルはVegasScriptConfig.SupportedAudioFileで指定されたもの
         /// </summary>
-        /// <param name="fileDir">指定したディレクトリ</param>
-        /// <param name="fromStart">トラックの最初から挿入するかどうかを示すフラグ。trueのときは最初から、falseのときは現在のカーソル位置から</param>
-        internal void InseretAudioInTrack(string fileDir, bool fromStart = false)
+        /// <param name="fileDir">指定したディレクトリ名</param>
+        /// <param name="interval">挿入するイベント間の間隔　単位はミリ秒　標準は0.0</param>
+        /// <param name="fromStart">トラックの最初から挿入するかどうかを示すフラグ　trueのときは最初から、falseのときは現在のカーソル位置から</param>
+        /// <param name="recursive">子ディレクトリのを再帰的にトラックの最初から挿入するかどうかを示すフラグ　trueのときは最初から、falseのときは現在のカーソル位置から</param>
+        internal void InseretAudioInTrack(string fileDir, float interval = 0.0f, bool fromStart = false, bool recursive = true)
         {
             AudioTrack audioTrack = AddAudioTrack();
             audioTrack.Selected = true;
 
             Timecode currentPosition = fromStart ? new Timecode() : Vegas.Cursor;
+            Timecode intervalTimecode = new Timecode(interval);
 
-            foreach(string filePath in Directory.GetFiles(fileDir))
+            _InsertAudio(currentPosition, intervalTimecode, fileDir, audioTrack, recursive);
+        }
+
+        private Timecode _InsertAudio(Timecode current, Timecode interval, string fileDir, AudioTrack audioTrack, bool recursive)
+        {
+            if (recursive)
             {
-                if(Path.GetExtension(filePath)　== ".wav")
+                foreach (string childDir in Directory.GetDirectories(fileDir))
+                {
+                    current = _InsertAudio(current, interval, childDir, audioTrack, recursive);
+                }
+            }
+            foreach (string filePath in Directory.GetFiles(fileDir))
+            {
+                if (VegasScriptConfig.SupportedAudioFile.Contains(Path.GetExtension(filePath)))
                 {
                     Media audioMedia = new Media(filePath);
                     AudioStream audioStream = audioMedia.GetAudioStreamByIndex(0);
 
-                    AudioEvent audioEvent = audioTrack.AddAudioEvent(currentPosition, audioStream.Length);
+                    AudioEvent audioEvent = audioTrack.AddAudioEvent(current, audioStream.Length);
                     audioEvent.AddTake(audioStream);
 
-                    currentPosition += audioStream.Length;
+                    current += audioStream.Length + interval;
                 }
             }
+            return current;
         }
     }
 }

@@ -47,7 +47,21 @@
   <ItemGroup>
     <Compile Include="EntryPoint.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
+    <Compile Include="Properties\Vegas.Designer.cs">
+      <AutoGen>True</AutoGen>
+      <DesignTimeSharedInput>True</DesignTimeSharedInput>
+      <DependentUpon>Vegas.settings</DependentUpon>
+    </Compile>
     <Compile Include="VegasHelper.cs" />
+    <Compile Include="VegasScriptConfig.cs" />
+    <Compile Include="VegasScriptSettings.cs" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="app.config" />
+    <None Include="Properties\Vegas.settings">
+      <Generator>SettingsSingleFileGenerator</Generator>
+      <LastGenOutput>Vegas.Designer.cs</LastGenOutput>
+    </None>
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
 </Project>
