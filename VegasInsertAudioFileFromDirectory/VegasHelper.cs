@@ -126,6 +126,44 @@ namespace VegasInsertAudioFileFromDirectory
             return track.IsAudio() ? (AudioTrack)track : null;
         }
 
+        internal string GetTrackTitle(Track track)
+        {
+            return track.Name;
+        }
+
+        internal string GetVideoTrackTitle()
+        {
+            VideoTrack track = SelectedVideoTrack();
+            if (track is null) { return null; }
+            return GetTrackTitle(track);
+        }
+
+        internal string GetAudioTrackTitle()
+        {
+            AudioTrack track = SelectedAudioTrack();
+            if (track is null) { return null; }
+            return GetTrackTitle(track);
+        }
+
+        internal void SetTrackTitle(Track track, string title)
+        {
+            track.Name = title;
+        }
+
+        internal void SetVideoTrackTitle(string title)
+        {
+            VideoTrack track = SelectedVideoTrack();
+            if (track is null) { return; }
+            SetTrackTitle(track, title);
+        }
+
+        internal void SetAudioTrackTitle(string title)
+        {
+            AudioTrack track = SelectedAudioTrack();
+            if (track is null) { return; }
+            SetTrackTitle(track, title);
+        }
+
         /// <summary>
         /// 引数で指定したトラックがビデオトラックかどうかを調べる
         /// </summary>
@@ -168,6 +206,7 @@ namespace VegasInsertAudioFileFromDirectory
         internal void InseretAudioInTrack(string fileDir, float interval = 0.0f, bool fromStart = false, bool recursive = true)
         {
             AudioTrack audioTrack = AddAudioTrack();
+            SetTrackTitle(audioTrack, "Subtitles");
             audioTrack.Selected = true;
 
             Timecode currentPosition = fromStart ? new Timecode() : Vegas.Cursor;
