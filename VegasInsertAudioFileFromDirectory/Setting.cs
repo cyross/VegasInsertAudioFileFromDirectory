@@ -26,14 +26,17 @@ namespace VegasInsertAudioFileFromDirectory
                 AudioFileFolderText.Text = folderBrowser.SelectedPath;
             }
         }
+
         public string AudioFileFolder {
             get { return AudioFileFolderText.Text; }
             set { AudioFileFolderText.Text = value; }
         }
+
         public float AudioInterval {
             get { return float.Parse(IntervalInputText.Text); }
             set { IntervalInputText.Text = value.ToString(); }
         }
+
         public bool IsRecursive {
             get { return IsRecursiveCheck.Checked; }
             set { IsRecursiveCheck.Checked = value; }

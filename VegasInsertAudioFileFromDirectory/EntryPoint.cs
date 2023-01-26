@@ -1,6 +1,6 @@
 ﻿using ScriptPortal.Vegas;
-using System;
 using System.Windows.Forms;
+using VegasScriptHelper;
 
 namespace VegasInsertAudioFileFromDirectory
 {
@@ -11,11 +11,13 @@ namespace VegasInsertAudioFileFromDirectory
             VegasScriptSettings.Load();
             VegasHelper helper = VegasHelper.Instance(vegas);
 
-            Setting settingDialog = new Setting();
-            settingDialog.AudioFileFolder = VegasScriptSettings.OpenDirectory;
-            settingDialog.AudioInterval = VegasScriptSettings.AudioInsertInterval;
-            settingDialog.IsRecursive = VegasScriptSettings.IsRecursive;
-            settingDialog.StartFrom = VegasScriptSettings.StartFrom;
+            Setting settingDialog = new Setting()
+            {
+                AudioFileFolder = VegasScriptSettings.OpenDirectory,
+                AudioInterval = VegasScriptSettings.AudioInsertInterval,
+                IsRecursive = VegasScriptSettings.IsRecursive,
+                StartFrom = VegasScriptSettings.StartFrom
+            };
 
             if (settingDialog.ShowDialog() == DialogResult.OK)
             {
@@ -30,7 +32,6 @@ namespace VegasInsertAudioFileFromDirectory
                 VegasScriptSettings.IsRecursive = isRecursive;
                 VegasScriptSettings.StartFrom = startFrom;
                 VegasScriptSettings.Save();
-
             }
         }
     }
