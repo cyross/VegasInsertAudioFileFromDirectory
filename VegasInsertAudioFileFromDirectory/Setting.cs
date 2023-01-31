@@ -1,11 +1,5 @@
 ﻿using System;
 using System.Collections.Generic;
-using System.ComponentModel;
-using System.Data;
-using System.Drawing;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 using System.Windows.Forms;
 
 namespace VegasInsertAudioFileFromDirectory
@@ -58,6 +52,28 @@ namespace VegasInsertAudioFileFromDirectory
                     fromStart.Checked = true;
                 }
             }
+        }
+
+        public bool UseMediaBin
+        {
+            get { return useMediaBin.Checked; }
+        }
+
+        public string MediaBinName
+        {
+            get { return mediaBinName.Text; }
+            set { mediaBinName.Text = value; }
+        }
+
+        public List<string> TrackNameDataSource
+        {
+            set { trackName.DataSource = value; }
+        }
+
+        public string TrackName
+        {
+            get { return trackName.Text; }
+            set { trackName.Text = value; }
         }
     }
 }

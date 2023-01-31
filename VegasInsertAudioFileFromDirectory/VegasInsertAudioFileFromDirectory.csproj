@@ -8,7 +8,7 @@
     <OutputType>Library</OutputType>
     <AppDesignerFolder>Properties</AppDesignerFolder>
     <RootNamespace>VegasInsertAudioFileFromDirectory</RootNamespace>
-    <AssemblyName>VegasScriptInsertAudioFileFromDirectory</AssemblyName>
+    <AssemblyName>指定ディレクトリの音声ファイルをオーディオトラックに挿入</AssemblyName>
     <TargetFrameworkVersion>v4.8</TargetFrameworkVersion>
     <FileAlignment>512</FileAlignment>
     <Deterministic>true</Deterministic>
