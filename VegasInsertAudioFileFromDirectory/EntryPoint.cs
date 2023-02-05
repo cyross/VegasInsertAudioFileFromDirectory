@@ -8,6 +8,8 @@ namespace VegasInsertAudioFileFromDirectory
 {
     public class EntryPoint: IEntryPoint
     {
+        private Setting settingDialog = null;
+
         public void FromVegas(Vegas vegas)
         {
             VegasHelper helper = VegasHelper.Instance(vegas);
@@ -32,16 +34,18 @@ namespace VegasInsertAudioFileFromDirectory
             }
             List<string> keyList = keyValuePairs.Keys.ToList();
 
-            Setting settingDialog = new Setting()
+            if(settingDialog == null)
             {
-                AudioFileFolder = VegasScriptSettings.OpenDirectory,
-                AudioInterval = VegasScriptSettings.AudioInsertInterval,
-                IsRecursive = VegasScriptSettings.IsRecursive,
-                StartFrom = VegasScriptSettings.StartFrom,
-                MediaBinName = VegasScriptSettings.DefaultBinName["voiroVoice"],
-                TrackNameDataSource = keyList,
-                TrackName = selectedAudioTrack != null ? helper.GetTrackKey(selectedAudioTrack) : keyList.First()
-            };
+                settingDialog = new Setting();
+            }
+
+            settingDialog.AudioFileFolder = VegasScriptSettings.OpenDirectory;
+            settingDialog.AudioInterval = VegasScriptSettings.AudioInsertInterval;
+            settingDialog.IsRecursive = VegasScriptSettings.IsRecursive;
+            settingDialog.StartFrom = VegasScriptSettings.StartFrom;
+            settingDialog.MediaBinName = VegasScriptSettings.DefaultBinName["voiroVoice"];
+            settingDialog.TrackNameDataSource = keyList;
+            settingDialog.TrackName = selectedAudioTrack != null ? helper.GetTrackKey(selectedAudioTrack) : keyList.First();
 
             if (settingDialog.ShowDialog() == DialogResult.Cancel) { return; }
 
