@@ -1,5 +1,7 @@
 ﻿using ScriptPortal.Vegas;
+using System;
 using System.Collections.Generic;
+using System.Diagnostics;
 using System.Linq;
 using System.Windows.Forms;
 using VegasScriptHelper;
@@ -60,16 +62,35 @@ namespace VegasInsertAudioFileFromDirectory
                 targetAudioTrack = keyValuePairs[settingDialog.TrackName];
             }
 
-            helper.InseretAudioInTrack(
-                selectedPath,
-                interval,
-                startFrom,
-                isRecursive,
-                settingDialog.UseMediaBin,
-                settingDialog.MediaBinName,
-                targetAudioTrack,
-                settingDialog.TrackName
-                );
+            try
+            {
+                using (new UndoBlock("オーディオトラックに音声ファイルを流し込み"))
+                {
+                    helper.InseretAudioInTrack(
+                        selectedPath,
+                        interval,
+                        startFrom,
+                        isRecursive,
+                        settingDialog.UseMediaBin,
+                        settingDialog.MediaBinName,
+                        targetAudioTrack,
+                        settingDialog.TrackName
+                        );
+                }
+            }
+            catch (Exception ex)
+            {
+                string errMessage = "[MESSAGE]" + ex.Message + "\n[SOURCE]" + ex.Source + "\n[STACKTRACE]" + ex.StackTrace;
+                Debug.WriteLine("---[Exception In Helper]---");
+                Debug.WriteLine(errMessage);
+                Debug.WriteLine("---------------------------");
+                MessageBox.Show(
+                    errMessage,
+                    "エラー",
+                    MessageBoxButtons.OK,
+                    MessageBoxIcon.Error);
+                throw ex;
+            }
 
             VegasScriptSettings.OpenDirectory = selectedPath;
             VegasScriptSettings.AudioInsertInterval = interval;
